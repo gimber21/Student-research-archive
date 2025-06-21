@@ -1,8 +1,14 @@
-<?php session_start(); if ($_SESSION['user']['role'] !== 'student') header("Location: index.php"); ?>
+<?php
+session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
+    header("Location: index.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Upload</title>
+    <title>Upload Research</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,6 +19,7 @@
         <textarea name="abstract" placeholder="Abstract" rows="5" required></textarea>
         <input type="file" name="file" required>
         <button type="submit">Upload</button>
+        <a href="student_home.php">Back</a>
     </form>
 </div>
 </body>

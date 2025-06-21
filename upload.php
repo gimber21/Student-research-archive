@@ -10,6 +10,7 @@
     <form action="upload_process.php" method="POST" enctype="multipart/form-data">
         <h2>Upload Research</h2>
         <input type="text" name="title" placeholder="Research Title" required>
+        <textarea name="abstract" placeholder="Abstract" rows="5" required></textarea>
         <input type="file" name="file" required>
         <button type="submit">Upload</button>
     </form>

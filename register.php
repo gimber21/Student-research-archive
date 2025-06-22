@@ -177,9 +177,7 @@
             </div>
             <nav class="main-nav">
                 <a href="homepage.php">Home</a>
-                <a href="search.php">Research</a>
                 <a href="index.php">Login</a>
-                <a href="register.php" class="active">Register</a>
                 <a href="about.php">About</a>
             </nav>
         </div>

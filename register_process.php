@@ -11,8 +11,16 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssss", $name, $email, $password, $role);
 
 if ($stmt->execute()) {
-    header("Location: index.php");
+    echo "<script>
+        alert('Registration successful!');
+        window.location.href = 'index.php';
+    </script>";
+    exit;
 } else {
-    echo "Registration failed.";
+    echo "<script>
+        alert('Registration failed. Please try again.');
+        window.location.href = 'register.html';
+    </script>";
+    exit;
 }
 ?>

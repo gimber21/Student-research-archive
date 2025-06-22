@@ -157,6 +157,9 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
             text-align: center;
             font-size: 1.05rem;
         }
+        th.title-col, td.title-col {
+            text-align: left;
+        }
         th {
             background-color: #e8f0fe;
             color: #2d6cdf;
@@ -240,7 +243,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
         <table>
             <tr>
                 <th>ID</th>
-                <th>Title</th>
+                <th class="title-col">Title</th>
                 <th>Filename</th>
                 <th>Uploaded By</th>
                 <th>Status</th>
@@ -254,7 +257,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
             ?>
                 <tr>
                     <td><?= $row['id'] ?></td>
-                    <td><?= htmlspecialchars($row['title']) ?></td>
+                    <td class="title-col"><?= htmlspecialchars($row['title']) ?></td>
                     <td><a href="uploads/<?= urlencode($row['filename']) ?>" target="_blank">View File</a></td>
                     <td><?= htmlspecialchars($row['uploader_name']) ?></td>
                     <td>

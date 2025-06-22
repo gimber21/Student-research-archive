@@ -24,15 +24,32 @@ $file_path = $upload_dir . $filename;
 // Upload the file and insert into DB
 if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
     $sql = "INSERT INTO researches (user_id, title, abstract, file_path) VALUES (?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare($sql);
 
-if (!$stmt) {
-    die("SQL error: " . $conn->error); // Shows what's the problem with the SQL statement
-}
+    if (!$stmt) {
+        echo "<script>
+            alert('Database error: " . addslashes($conn->error) . "');
+            window.location.href = 'student_home.php';
+        </script>";
+        exit;
+    }
+
     $stmt->bind_param("isss", $user_id, $title, $abstract, $file_path);
-    $stmt->execute();
-    header("Location: student_home.php");
+    if ($stmt->execute()) {
+        echo "<script>
+            alert('Upload successful!');
+            window.location.href = 'student_home.php';
+        </script>";
+    } else {
+        echo "<script>
+            alert('Upload failed. Please try again.');
+            window.location.href = 'student_home.php';
+        </script>";
+    }
 } else {
-    echo "Upload failed. Please check folder permissions.";
+    echo "<script>
+        alert('Upload failed. Please check folder permissions or file size.');
+        window.location.href = 'student_home.php';
+    </script>";
 }
 ?>

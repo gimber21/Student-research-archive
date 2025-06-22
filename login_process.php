@@ -16,13 +16,23 @@ if ($result->num_rows === 1) {
     $user = $result->fetch_assoc();
     if (password_verify($password, $user['password'])) {
         $_SESSION['user'] = $user;
-        header("Location: " . ($role === 'student' ? "student_home.php" : "admin_dashboard.php"));
+        echo "<script>
+            alert('Login successful!');
+            window.location.href = '" . ($role === 'student' ? "student_home.php" : "admin_dashboard.php") . "';
+        </script>";
+        exit;
     } else {
-        $_SESSION['login_error'] = 'Incorrect email or password.';
-        header("Location: index.php");
+        echo "<script>
+            alert('Incorrect credentials. Please try again.');
+            window.location.href = 'index.php';
+        </script>";
+        exit;
     }
 } else {
-    $_SESSION['login_error'] = 'Incorrect email or password.';
-    header("Location: index.php");
+    echo "<script>
+        alert('No user found. Please register first.');
+        window.location.href = 'index.php';
+    </script>";
+    exit;
 }
 ?>

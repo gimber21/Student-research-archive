@@ -20,7 +20,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
         h1 {
-            color: #2a6ebb;
+            color: #2d6cdf;
         }
         p {
             text-align: justify;
@@ -29,7 +29,7 @@
             display: inline-block;
             margin-bottom: 20px;
             padding: 8px 18px;
-            background: #2a6ebb;
+            background: #2d6cdf;
             color: #fff;
             text-decoration: none;
             border-radius: 4px;
@@ -37,7 +37,7 @@
             transition: background 0.2s;
         }
         .back-btn:hover {
-            background: #1d4f8b;
+            background: #1b4fa0;
         }
     </style>
 </head>

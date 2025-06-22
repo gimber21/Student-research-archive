@@ -21,20 +21,20 @@
         }
         h1 {
             text-align: center;
-            color: #2a6ebb;
+            color: #2d6cdf;
         }
         .info-group {
             margin-top: 25px;
         }
         .info-group h3 {
             margin-bottom: 10px;
-            color: #2a6ebb;
+            color: #2d6cdf;
         }
         .info-group p {
             margin: 4px 0;
         }
         a {
-            color: #1d4f8b;
+            color: #2a6ebb;
             text-decoration: none;
         }
         a:hover {
@@ -44,7 +44,7 @@
             display: inline-block;
             margin-bottom: 20px;
             padding: 8px 18px;
-            background: #2a6ebb;
+            background: #2d6cdf;
             color: #fff;
             text-decoration: none;
             border-radius: 4px;
@@ -52,7 +52,7 @@
             transition: background 0.2s;
         }
         .back-btn:hover {
-            background: #1d4f8b;
+            background: #1b4fa0;
         }
     </style>
 </head>

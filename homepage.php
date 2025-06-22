@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+            padding: 0.5rem 1.5rem;
         }
         .logo-area {
             display: flex;
@@ -56,7 +56,6 @@
         .main-nav {
             display: flex;
             gap: 0.5rem;
-            padding: 0;
         }
         .main-nav a {
             color: #2d6cdf;
@@ -67,13 +66,9 @@
             padding: 0.5rem 1.2rem;
             border-radius: 22px;
             font-weight: 500;
-            transition: 
-                background 0.2s,
-                color 0.2s,
-                border-color 0.2s;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
             margin: 0 0.1rem;
             letter-spacing: 0.5px;
-            position: relative;
         }
         .main-nav a.active, .main-nav a:hover {
             background: #2d6cdf;
@@ -176,18 +171,17 @@
         .archive-card a:hover {
             background: #1b4fa0;
         }
+        footer {
+            background:#2d6cdf;
+            color:#fff;
+            text-align:center;
+            padding:1.2rem 0;
+            margin-top:2rem;
+            font-size:1rem;
+        }
         @media (max-width: 600px) {
-            .site-header h1 {
-                font-size: 1.2rem;
-            }
-            header.page-header h1 {
-                font-size: 1.5rem;
-            }
             .archive-card {
                 padding: 1rem;
-            }
-            .main-nav {
-                gap: 1rem;
             }
         }
         @media (max-width: 700px) {
@@ -201,9 +195,6 @@
                 justify-content: flex-start;
                 gap: 0.2rem;
             }
-            .logo-area {
-                margin-bottom: 0.5rem;
-            }
         }
     </style>
 </head>
@@ -215,7 +206,7 @@
                 <span class="site-title">Student Research Archive</span>
             </div>
             <nav class="main-nav">
-                <a href="homapage.php" class="active">Home</a>
+                <a href="homepage.php" class="active">Home</a>
                 <a href="index.php">Login</a>
                 <a href="about.php">About</a>
             </nav>
@@ -231,34 +222,45 @@
             <button type="submit">Search</button>
         </form>
         <section class="archive-list" id="archiveList">
-            <!-- Example research cards -->
             <div class="archive-card">
                 <h2>Machine Learning for Healthcare</h2>
-                <div class="meta">Jane Doe &middot; 2023</div>
+                <div class="meta">Khimmy Razel · 2023</div>
                 <p>An exploration of machine learning algorithms to predict patient outcomes and improve diagnostics.</p>
-                <a href="#">Read More</a>
+                <a href="research1.php">Read More</a>
             </div>
             <div class="archive-card">
                 <h2>Renewable Energy Solutions</h2>
-                <div class="meta">John Smith &middot; 2022</div>
+                <div class="meta">Jeremiah Kase · 2022</div>
                 <p>Investigating the efficiency of solar panels and wind turbines in urban environments.</p>
-                <a href="#">Read More</a>
+                <a href="research2.php">Read More</a>
             </div>
             <div class="archive-card">
                 <h2>Social Media and Mental Health</h2>
-                <div class="meta">Emily Chen &middot; 2024</div>
+                <div class="meta">Moiraine Kagandahan · 2024</div>
                 <p>A study on the impact of social media usage on the mental health of teenagers.</p>
-                <a href="#">Read More</a>
+                <a href="research3.php">Read More</a>
             </div>
             <div class="archive-card">
                 <h2>Blockchain in Education</h2>
-                <div class="meta">Carlos Rivera &middot; 2023</div>
+                <div class="meta">Shaliyah Babes · 2023</div>
                 <p>Exploring blockchain technology for secure and transparent academic records.</p>
-                <a href="#">Read More</a>
+                <a href="research4.php">Read More</a>
+            </div>
+            <div class="archive-card">
+                <h2>AI-Powered Language Learning</h2>
+                <div class="meta">Katherine Lumayas · 2025</div>
+                <p>Developing intelligent systems to support personalized and adaptive language learning platforms.</p>
+                <a href="research5.php">Read More</a>
+            </div>
+            <div class="archive-card">
+                <h2>Climate Change and Agriculture</h2>
+                <div class="meta">Rose Marie · 2023</div>
+                <p>A detailed study of how rising temperatures impact crop yields and farming practices globally.</p>
+                <a href="research6.php">Read More</a>
             </div>
         </section>
     </main>
-    <footer style="background:#2d6cdf; color:#fff; text-align:center; padding:1.2rem 0; margin-top:2rem; font-size:1rem;">
+    <footer>
         &copy; 2025 Student Research Archive. All rights reserved.<br>
         <span>
             <a href="about.php" style="color:#fff; text-decoration:underline; margin:0 8px;">About</a> |

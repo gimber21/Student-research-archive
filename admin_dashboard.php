@@ -264,7 +264,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
                         <?php if ($row['status'] === 'pending'): ?>
                             <span style="color:#f59e42;font-weight:500;">Pending</span>
                         <?php else: ?>
-                            <span class="approved-badge">✅ Approved</span>
+                            <span class="approved-badge">Approved</span>
                         <?php endif; ?>
                     </td>
                     <td>

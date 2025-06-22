@@ -23,7 +23,12 @@ $file_path = $upload_dir . $filename;
 
 // Upload the file and insert into DB
 if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
-    $stmt = $conn->prepare("INSERT INTO researches (user_id, title, abstract, file_path) VALUES (?, ?, ?, ?)");
+    $sql = "INSERT INTO researches (user_id, title, abstract, file_path) VALUES (?, ?, ?, ?)";
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("SQL error: " . $conn->error); // Shows what's the problem with the SQL statement
+}
     $stmt->bind_param("isss", $user_id, $title, $abstract, $file_path);
     $stmt->execute();
     header("Location: student_home.php");

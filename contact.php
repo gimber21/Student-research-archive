@@ -5,15 +5,41 @@
     <title>Contact Us</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
-        .container { max-width: 500px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);}
-        h1 { text-align: center; color: #333; }
-        form { display: flex; flex-direction: column; gap: 0; }
-        label { margin-top: 15px; margin-bottom: 5px; }
-        input, textarea, button { width: 100%; box-sizing: border-box; }
-        input, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        button { margin-top: 20px; padding: 12px; background: #0078d7; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
-        button:hover { background: #005fa3; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2a6ebb;
+        }
+        .info-group {
+            margin-top: 25px;
+        }
+        .info-group h3 {
+            margin-bottom: 10px;
+            color: #2a6ebb;
+        }
+        .info-group p {
+            margin: 4px 0;
+        }
+        a {
+            color: #1d4f8b;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
         .back-btn {
             display: inline-block;
             margin-bottom: 20px;
@@ -34,18 +60,25 @@
     <div class="container">
         <a href="homepage.php" class="back-btn">&larr; Back</a>
         <h1>Contact Us</h1>
-        <form>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+        <div class="info-group">
+            <h3>Email</h3>
+            <p><a href="mailto:sra.support@example.com">sra.bsinfotech@gmail.com</a></p>
+        </div>
 
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
-
-            <button type="submit">Send Message</button>
-        </form>
+        <div class="info-group">
+            <h3>Social Media</h3>
+            <p><strong>Facebook:</strong> <a href="https://facebook.com/studentresearcharchive" target="_blank">facebook.com/studentresearcharchive</a></p>
+            <p><strong>X:</strong> <a href="https://x.com/sra_official" target="_blank">@sra_official</a></p>
+            <p><strong>Instagram:</strong> <a href="https://instagram.com/sra.official" target="_blank">@sra.official</a></p>
+        </div>
+        <div class="info-group">
+            <h3>Address</h3>
+            <p>Nagtahan, Sampaloc, Manila, 1008 Metro Manila, Philippines</p>
+        <div class="info-group">
+            <h3>Phone</h3>
+            <p>+63 912 345 6789</p>
+        </div>
     </div>
 </body>
 </html>

@@ -250,7 +250,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
                 <th>Action</th>
             </tr>
             <?php
-            $query = "SELECT r.*, u.name AS uploader_name FROM researches r LEFT JOIN users u ON r.uploaded_by = u.id";
+            $query = "SELECT r.*, u.name AS uploader_name FROM researches r LEFT JOIN users u ON r.user_id = u.id";
             $result = $conn->query($query);
 
             while ($row = $result->fetch_assoc()):

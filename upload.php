@@ -32,7 +32,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+            padding: 0.5rem 1.5rem;
         }
         .logo-area {
             display: flex;
@@ -186,6 +186,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
     <div class="container">
         <h2>Upload Research</h2>
         <form action="upload_process.php" method="POST" enctype="multipart/form-data" class="upload-form">
+            <input type="text" name="uploaded_by" value="<?php echo htmlspecialchars($_SESSION['user']['name']); ?>" readonly>
             <input type="text" name="title" placeholder="Research Title" required>
             <textarea name="abstract" placeholder="Abstract" rows="5" required></textarea>
             <input type="file" name="file" required>
@@ -194,8 +195,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
         </form>
     </div>
     <footer style="background:#2d6cdf; color:#fff; text-align:center; padding:1.2rem 0; margin-top:2rem; font-size:1rem;">
-        &copy; 2025 Student Research Archive. All rights reserved.<br>
-        <br>
+        &copy; 2025 Student Research Archive. All rights reserved.<br><br>
         <span style="font-size:0.95em; color:#e0e7ef;">
             Designed by the HexaTech Developers Team
         </span>

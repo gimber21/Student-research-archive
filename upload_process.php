@@ -8,7 +8,6 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
 }
 
 $title = $_POST['title'];
-$abstract = $_POST['abstract'];
 $user_id = $_SESSION['user']['id'];
 
 $upload_dir = "uploads/";
@@ -23,7 +22,7 @@ $file_path = $upload_dir . $filename;
 
 // Upload the file and insert into DB
 if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
-    $sql = "INSERT INTO researches (user_id, title, abstract, file_path) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO researches (user_id, title, filename, file_path) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -34,7 +33,7 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
         exit;
     }
 
-    $stmt->bind_param("isss", $user_id, $title, $abstract, $file_path);
+    $stmt->bind_param("isss", $user_id, $title, $filename, $file_path);
     if ($stmt->execute()) {
         echo "<script>
             alert('Upload successful!');

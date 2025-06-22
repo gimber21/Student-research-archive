@@ -262,7 +262,7 @@
         &copy; 2025 Student Research Archive. All rights reserved.<br>
         <span>
             <a href="about.php" style="color:#fff; text-decoration:underline; margin:0 8px;">About</a> |
-            <a href="contact.php" style="color:#fff; text-decoration:underline; margin:0 8px;">Contact</a> |
+            <a href="contact.php" style="color:#fff; text-decoration:underline; margin:0 8px;">Contact Us</a> |
             <a href="policy.php" style="color:#fff; text-decoration:underline; margin:0 8px;">Privacy Policy</a>
         </span>
         <br>

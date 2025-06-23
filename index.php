@@ -203,14 +203,6 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <div class="form-group">
-                <label for="role">Login as</label>
-                <select id="role" name="role" required>
-                    <option value="">Select role</option>
-                    <option value="student">Student</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
             <button type="submit" class="login-btn">Sign In</button>
             <div class="login-footer">
                 Don't have an account? <a href="register.php">Register</a>

@@ -197,14 +197,6 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password" required>
             </div>
-            <div class="form-group">
-                <label for="role">Register as</label>
-                <select id="role" name="role" required>
-                    <option value="">Select role</option>
-                    <option value="student">Student</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
             <button type="submit" class="register-btn">Register</button>
             <div class="register-footer">
                 Already have an account? <a href="index.php">Login</a>

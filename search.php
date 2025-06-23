@@ -232,7 +232,7 @@
         }
         ?>
         </div>
-        <a href="student_home.php" class="back-link">&larr; Back to Dashboard</a>
+        <a href="student_home.php" class="back-link">&larr; Back</a>
     </div>
     <footer style="background:#2d6cdf; color:#fff; text-align:center; padding:1.2rem 0; margin-top:2rem; font-size:1rem;">
         &copy; 2025 Student Research Archive. All rights reserved.<br>

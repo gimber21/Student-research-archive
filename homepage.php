@@ -1,3 +1,6 @@
+<?php
+include 'dbconn.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -221,43 +224,28 @@
             <input type="text" id="searchInput" placeholder="Search by title, author, or keyword...">
             <button type="submit">Search</button>
         </form>
+
         <section class="archive-list" id="archiveList">
+            <?php
+            $sql = "SELECT r.id, r.title, r.abstract, u.name AS author, YEAR(r.created_at) AS year
+                    FROM researches r
+                    JOIN users u ON r.user_id = u.id
+                    WHERE r.status = 'approved'
+                    ORDER BY r.created_at DESC";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0):
+                while ($row = $result->fetch_assoc()):
+            ?>
             <div class="archive-card">
-                <h2>Machine Learning for Healthcare</h2>
-                <div class="meta">Khimmy Razel · 2023</div>
-                <p>An exploration of machine learning algorithms to predict patient outcomes and improve diagnostics.</p>
-                <a href="research1.php">Read More</a>
+                <h2><?= htmlspecialchars($row['title']) ?></h2>
+                <div class="meta"><?= htmlspecialchars($row['author']) ?> · <?= $row['year'] ?></div>
+                <p><?= htmlspecialchars(mb_strimwidth($row['abstract'], 0, 150, '...')) ?></p>
+                <a href="research.php?id=<?= $row['id'] ?>">Read More</a>
             </div>
-            <div class="archive-card">
-                <h2>Renewable Energy Solutions</h2>
-                <div class="meta">Jeremiah Kase · 2022</div>
-                <p>Investigating the efficiency of solar panels and wind turbines in urban environments.</p>
-                <a href="research2.php">Read More</a>
-            </div>
-            <div class="archive-card">
-                <h2>Social Media and Mental Health</h2>
-                <div class="meta">Moiraine Kagandahan · 2024</div>
-                <p>A study on the impact of social media usage on the mental health of teenagers.</p>
-                <a href="research3.php">Read More</a>
-            </div>
-            <div class="archive-card">
-                <h2>Blockchain in Education</h2>
-                <div class="meta">Shaliyah Babes · 2023</div>
-                <p>Exploring blockchain technology for secure and transparent academic records.</p>
-                <a href="research4.php">Read More</a>
-            </div>
-            <div class="archive-card">
-                <h2>AI-Powered Language Learning</h2>
-                <div class="meta">Katherine Lumayas · 2025</div>
-                <p>Developing intelligent systems to support personalized and adaptive language learning platforms.</p>
-                <a href="research5.php">Read More</a>
-            </div>
-            <div class="archive-card">
-                <h2>Climate Change and Agriculture</h2>
-                <div class="meta">Rose Marie · 2023</div>
-                <p>A detailed study of how rising temperatures impact crop yields and farming practices globally.</p>
-                <a href="research6.php">Read More</a>
-            </div>
+            <?php endwhile; else: ?>
+            <p style="grid-column: 1 / -1; text-align: center;">No approved research yet.</p>
+            <?php endif; ?>
         </section>
     </main>
     <footer>
@@ -272,6 +260,7 @@
             Designed by the HexaTech Developers Team
         </span>
     </footer>
+
     <script>
         function filterArchive() {
             const input = document.getElementById('searchInput').value.toLowerCase();

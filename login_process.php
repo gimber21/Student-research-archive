@@ -4,33 +4,44 @@ include 'dbconn.php';
 
 $email = $_POST['email'];
 $password = $_POST['password'];
-$role = $_POST['role'];
 
-$sql = "SELECT * FROM users WHERE email = ? AND role = ?";
+// Fetch the user based only on email (not role)
+$sql = "SELECT * FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $email, $role);
+$stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 1) {
     $user = $result->fetch_assoc();
+
+    // Verify password
     if (password_verify($password, $user['password'])) {
         $_SESSION['user'] = $user;
-        echo "<script>
-            alert('Login successful!');
-            window.location.href = '" . ($role === 'student' ? "student_home.php" : "admin_dashboard.php") . "';
-        </script>";
+
+        // Redirect based on the user's role
+        if ($user['role'] === 'admin') {
+            echo "<script>
+                alert('Login successful! Welcome Admin');
+                window.location.href = 'admin_dashboard.php';
+            </script>";
+        } else {
+            echo "<script>
+                alert('Login successful! Welcome Student');
+                window.location.href = 'student_home.php';
+            </script>";
+        }
         exit;
     } else {
         echo "<script>
-            alert('Incorrect credentials. Please try again.');
+            alert('Incorrect password. Please try again.');
             window.location.href = 'index.php';
         </script>";
         exit;
     }
 } else {
     echo "<script>
-        alert('No user found. Please register first.');
+        alert('No user found with that email.');
         window.location.href = 'index.php';
     </script>";
     exit;

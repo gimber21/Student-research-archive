@@ -8,11 +8,12 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
 }
 
 $title = $_POST['title'];
+$abstract = $_POST['abstract'];
 $user_id = $_SESSION['user']['id'];
 
 $upload_dir = "uploads/";
 
-// Auto-create folder if missing
+// Create folder if not exists
 if (!is_dir($upload_dir)) {
     mkdir($upload_dir, 0777, true);
 }
@@ -20,9 +21,10 @@ if (!is_dir($upload_dir)) {
 $filename = basename($_FILES['file']['name']);
 $file_path = $upload_dir . $filename;
 
-// Upload the file and insert into DB
+// Move uploaded file and insert into DB
 if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
-    $sql = "INSERT INTO researches (user_id, title, filename, file_path) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO researches (user_id, title, abstract, filename, file_path, status, created_at)
+            VALUES (?, ?, ?, ?, ?, 'pending', NOW())";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -33,21 +35,22 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
         exit;
     }
 
-    $stmt->bind_param("isss", $user_id, $title, $filename, $file_path);
+    $stmt->bind_param("issss", $user_id, $title, $abstract, $filename, $file_path);
+
     if ($stmt->execute()) {
         echo "<script>
-            alert('Upload successful!');
+            alert('Upload submitted successfully! Waiting for admin approval.');
             window.location.href = 'student_home.php';
         </script>";
     } else {
         echo "<script>
-            alert('Upload failed. Please try again.');
+            alert('Failed to save to database.');
             window.location.href = 'student_home.php';
         </script>";
     }
 } else {
     echo "<script>
-        alert('Upload failed. Please check folder permissions or file size.');
+        alert('Failed to upload file. Check permissions or file size.');
         window.location.href = 'student_home.php';
     </script>";
 }

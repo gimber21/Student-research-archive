@@ -191,7 +191,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
             <textarea name="abstract" placeholder="Abstract" rows="5" required></textarea>
             <input type="file" name="file" required>
             <button type="submit">Upload</button>
-            <a href="student_home.php" class="back-link">&larr; Back to Dashboard</a>
+            <a href="student_home.php" class="back-link">&larr; Back</a>
         </form>
     </div>
     <footer style="background:#2d6cdf; color:#fff; text-align:center; padding:1.2rem 0; margin-top:2rem; font-size:1rem;">

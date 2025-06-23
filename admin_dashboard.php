@@ -220,70 +220,73 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     </style>
 </head>
 <body>
-    <div class="site-header">
-        <div class="nav-container">
-            <div class="logo-area">
-                <div class="logo-circle">SRA</div>
-                <span class="site-title">Student Research Archive</span>
-            </div>
-            <nav class="main-nav">
-                <a href="logout.php">Logout</a>
-            </nav>
+<div class="site-header">
+    <div class="nav-container">
+        <div class="logo-area">
+            <div class="logo-circle">SRA</div>
+            <span class="site-title">Student Research Archive</span>
         </div>
-    </div>
-    <header class="page-header">
-        <h2>Admin Dashboard</h2>
-        <p>Manage all research submissions and approvals</p>
-    </header>
-    <div class="container">
-        <div class="admin-bar">
-            <span class="welcome">Welcome, <?= htmlspecialchars($_SESSION['user']['name']) ?></span>
-        </div>
-        <h2>Research Submissions</h2>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th class="title-col">Title</th>
-                <th>Filename</th>
-                <th>Uploaded By</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            <?php
-            $query = "SELECT r.*, u.name AS uploader_name FROM researches r LEFT JOIN users u ON r.user_id = u.id";
-            $result = $conn->query($query);
+        <nav class="main-nav">
+    <a href="removed_dashboard.php">Removed Research</a>
+    <a href="logout.php">Logout</a>
+</nav>
 
-            while ($row = $result->fetch_assoc()):
-            ?>
-                <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td class="title-col"><?= htmlspecialchars($row['title']) ?></td>
-                    <td><a href="uploads/<?= urlencode($row['filename']) ?>" target="_blank">View File</a></td>
-                    <td><?= htmlspecialchars($row['uploader_name']) ?></td>
-                    <td>
-                        <?php if ($row['status'] === 'pending'): ?>
-                            <span style="color:#f59e42;font-weight:500;">Pending</span>
-                        <?php else: ?>
-                            <span class="approved-badge">Approved</span>
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <?php if ($row['status'] === 'pending'): ?>
-                            <a class="button" href="approve.php?id=<?= $row['id'] ?>" onclick="return confirm('Approve this research?')">Approve</a>
-                        <?php else: ?>
-                            <span style="color:#aaa;">—</span>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </table>
     </div>
-    <footer style="background:#2d6cdf; color:#fff; text-align:center; padding:1.2rem 0; margin-top:2rem; font-size:1rem;">
-        &copy; 2025 Student Research Archive. All rights reserved.<br>
-        <br>
-        <span style="font-size:0.95em; color:#e0e7ef;">
-            Designed by the HexaTech Developers Team
-        </span>
-    </footer>
+</div>
+<header class="page-header">
+    <h2>Admin Dashboard</h2>
+    <p>Manage all research submissions and approvals</p>
+</header>
+<div class="container">
+    <div class="admin-bar">
+        <span class="welcome">Welcome, <?= htmlspecialchars($_SESSION['user']['name']) ?></span>
+    </div>
+    <h2>Research Submissions</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th class="title-col">Title</th>
+            <th>Filename</th>
+            <th>Uploaded By</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <?php
+        $query = "SELECT r.*, u.name AS uploader_name FROM researches r LEFT JOIN users u ON r.user_id = u.id";
+        $result = $conn->query($query);
+
+        while ($row = $result->fetch_assoc()):
+        ?>
+            <tr>
+                <td><?= $row['id'] ?></td>
+                <td class="title-col"><?= htmlspecialchars($row['title']) ?></td>
+                <td><a href="uploads/<?= urlencode($row['filename']) ?>" target="_blank">View File</a></td>
+                <td><?= htmlspecialchars($row['uploader_name']) ?></td>
+                <td>
+                    <?php if ($row['status'] === 'pending'): ?>
+                        <span style="color:#f59e42;font-weight:500;">Pending</span>
+                    <?php else: ?>
+                        <span class="approved-badge">Approved</span>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php if ($row['status'] === 'pending'): ?>
+                        <a class="button" href="approve.php?id=<?= $row['id'] ?>" onclick="return confirm('Approve this research?')">Approve</a>
+                        <a class="button" style="background:#e53e3e;" href="remove_research.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this research? This cannot be undone.')">Remove</a>
+                    <?php else: ?>
+                        <span class="approved-badge">Approved</span><br>
+                        <a class="button" style="margin-top: 6px; background:#e53e3e;" href="remove_research.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete this research?')">Remove</a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
+</div>
+<footer style="background:#2d6cdf; color:#fff; text-align:center; padding:1.2rem 0; margin-top:2rem; font-size:1rem;">
+    &copy; 2025 Student Research Archive. All rights reserved.<br><br>
+    <span style="font-size:0.95em; color:#e0e7ef;">
+        Designed by the HexaTech Developers Team
+    </span>
+</footer>
 </body>
 </html>

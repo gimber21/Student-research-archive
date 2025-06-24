@@ -158,7 +158,7 @@ include 'dbconn.php';
         }
         .archive-card .meta {
             font-size: 0.95rem;
-            color: #888;
+            color: #666;
             margin-bottom: 0.5rem;
         }
         .archive-card a {
@@ -227,7 +227,7 @@ include 'dbconn.php';
 
         <section class="archive-list" id="archiveList">
             <?php
-            $sql = "SELECT r.id, r.title, r.abstract, u.name AS author, YEAR(r.created_at) AS year
+            $sql = "SELECT r.id, r.title, r.abstract, u.name AS author, r.college, r.course, YEAR(r.created_at) AS year
                     FROM researches r
                     JOIN users u ON r.user_id = u.id
                     WHERE r.status = 'approved'
@@ -240,6 +240,7 @@ include 'dbconn.php';
             <div class="archive-card">
                 <h2><?= htmlspecialchars($row['title']) ?></h2>
                 <div class="meta"><?= htmlspecialchars($row['author']) ?> · <?= $row['year'] ?></div>
+                <div class="meta">College: <?= htmlspecialchars($row['college']) ?><br>Course: <?= htmlspecialchars($row['course']) ?></div>
                 <p><?= htmlspecialchars(mb_strimwidth($row['abstract'], 0, 150, '...')) ?></p>
                 <a href="research.php?id=<?= $row['id'] ?>">Read More</a>
             </div>

@@ -101,12 +101,14 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
         .upload-form input[type="text"],
         .upload-form textarea,
         .upload-form input[type="file"],
+        .upload-form select,
         .upload-form button {
             width: 100%;
             box-sizing: border-box;
         }
         .upload-form input[type="text"],
-        .upload-form textarea {
+        .upload-form textarea,
+        .upload-form select {
             padding: 0.7rem 1rem;
             border: 1.5px solid #bcd0f7;
             border-radius: 6px;
@@ -116,7 +118,8 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
             resize: none;
         }
         .upload-form input[type="text"]:focus,
-        .upload-form textarea:focus {
+        .upload-form textarea:focus,
+        .upload-form select:focus {
             border-color: #2d6cdf;
         }
         .upload-form input[type="file"] {
@@ -187,9 +190,30 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
         <h2>Upload Research</h2>
         <form action="upload_process.php" method="POST" enctype="multipart/form-data" class="upload-form">
             <input type="text" name="uploaded_by" value="<?php echo htmlspecialchars($_SESSION['user']['name']); ?>" readonly>
+
             <input type="text" name="title" placeholder="Research Title" required>
+
             <textarea name="abstract" placeholder="Abstract" rows="5" required></textarea>
+
+            <!-- College Dropdown -->
+            <select name="college" required>
+                <option value="">Select College</option>
+                <option value="College of Computing Studies">College of Computing Studies</option>
+                <option value="College of Industrial Technology">College of Industrial Technology</option>
+                <option value="College of Criminal Justice">College of Criminal Justice</option>
+                <option value="College of Engineering">College of Engineering</option>
+                <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                <option value="College of Architecture and Fine Arts">College of Architecture and Fine Arts</option>
+                <option value="College of Hospitality and Tourism Management">College of Hospitality and Tourism Management</option>
+                <option value="College of Education">College of Education</option>
+                <option value="College of Business and Public Administration">College of Business and Public Administration</option>
+            </select>
+
+            <!-- Course Input -->
+            <input type="text" name="course" placeholder="Enter Course" required>
+
             <input type="file" name="file" required>
+
             <button type="submit">Upload</button>
             <a href="student_home.php" class="back-link">&larr; Back</a>
         </form>

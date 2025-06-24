@@ -7,13 +7,16 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
     exit;
 }
 
+// Get form inputs
 $title = $_POST['title'];
 $abstract = $_POST['abstract'];
+$college = $_POST['college'];
+$course = $_POST['course'];
 $user_id = $_SESSION['user']['id'];
 
 $upload_dir = "uploads/";
 
-// Create folder if not exists
+// Create folder if it doesn't exist
 if (!is_dir($upload_dir)) {
     mkdir($upload_dir, 0777, true);
 }
@@ -23,8 +26,8 @@ $file_path = $upload_dir . $filename;
 
 // Move uploaded file and insert into DB
 if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
-    $sql = "INSERT INTO researches (user_id, title, abstract, filename, file_path, status, created_at)
-            VALUES (?, ?, ?, ?, ?, 'pending', NOW())";
+    $sql = "INSERT INTO researches (user_id, title, abstract, filename, file_path, college, course, status, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW())";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -35,7 +38,7 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $file_path)) {
         exit;
     }
 
-    $stmt->bind_param("issss", $user_id, $title, $abstract, $filename, $file_path);
+    $stmt->bind_param("issssss", $user_id, $title, $abstract, $filename, $file_path, $college, $course);
 
     if ($stmt->execute()) {
         echo "<script>

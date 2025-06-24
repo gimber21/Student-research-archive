@@ -1,4 +1,11 @@
-<?php session_start(); include 'dbconn.php'; if ($_SESSION['user']['role'] !== 'student') header("Location: index.php"); ?>
+<?php
+session_start();
+include 'dbconn.php';
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'student') {
+    header("Location: index.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +33,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+            padding: 0.5rem 1.5rem;
         }
         .logo-area {
             display: flex;
@@ -69,7 +76,6 @@
         header.page-header p {
             margin: 0.5rem 0 0 0;
             font-size: 1.1rem;
-            font-weight: 400;
         }
         .container {
             max-width: 520px;
@@ -77,7 +83,7 @@
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 4px 16px rgba(45,108,223,0.10);
-            padding: 38px 32px 32px 32px;
+            padding: 38px 32px 32px;
             text-align: center;
         }
         .container h2 {
@@ -88,12 +94,12 @@
         }
         .search-form {
             display: flex;
-            gap: 0.5rem;
+            flex-direction: column;
+            gap: 0.7rem;
             margin-bottom: 24px;
-            justify-content: center;
         }
-        .search-form input[type="text"] {
-            flex: 1;
+        .search-form input[type="text"],
+        .search-form select {
             padding: 0.7rem 1rem;
             border: 1.5px solid #bcd0f7;
             border-radius: 6px;
@@ -101,7 +107,8 @@
             outline: none;
             transition: border 0.2s;
         }
-        .search-form input[type="text"]:focus {
+        .search-form input[type="text"]:focus,
+        .search-form select:focus {
             border-color: #2d6cdf;
         }
         .search-form button {
@@ -130,7 +137,6 @@
             padding: 1.1rem 1.2rem;
             margin-bottom: 1.1rem;
             box-shadow: 0 2px 8px rgba(45,108,223,0.04);
-            transition: box-shadow 0.2s;
         }
         .result-box strong {
             color: #2d6cdf;
@@ -143,7 +149,6 @@
             text-decoration: none;
             font-weight: 500;
             font-size: 1.01rem;
-            transition: color 0.2s;
         }
         .result-box a:hover {
             color: #1e40af;
@@ -166,29 +171,10 @@
             text-decoration: none;
             font-size: 1rem;
             font-weight: 500;
-            transition: color 0.2s;
         }
         .back-link:hover {
-            text-decoration: underline;
             color: #2563eb;
-        }
-        @media (max-width: 700px) {
-            .nav-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-            .logo-area {
-                margin-bottom: 0.5rem;
-            }
-            .container {
-                margin: 32px 8px 0 8px;
-                padding: 22px 8px 18px 8px;
-            }
-            .search-form {
-                flex-direction: column;
-                gap: 0.7rem;
-            }
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -209,23 +195,71 @@
         <h2>Search Research</h2>
         <form method="GET" class="search-form">
             <input type="text" name="query" placeholder="Search by title..." value="<?= isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '' ?>">
+            <select name="college">
+                <option value="">All Colleges</option>
+                <option value="College of Computing Studies" <?= (isset($_GET['college']) && $_GET['college'] == "College of Computing Studies") ? 'selected' : '' ?>>College of Computing Studies</option>
+                <option value="College of Industrial Technology" <?= (isset($_GET['college']) && $_GET['college'] == "College of Industrial Technology") ? 'selected' : '' ?>>College of Industrial Technology</option>
+                <option value="College of Criminal Justice" <?= (isset($_GET['college']) && $_GET['college'] == "College of Criminal Justice") ? 'selected' : '' ?>>College of Criminal Justice</option>
+                <option value="College of Engineering" <?= (isset($_GET['college']) && $_GET['college'] == "College of Engineering") ? 'selected' : '' ?>>College of Engineering</option>
+                <option value="College of Arts and Sciences" <?= (isset($_GET['college']) && $_GET['college'] == "College of Arts and Sciences") ? 'selected' : '' ?>>College of Arts and Sciences</option>
+                <option value="College of Architecture and Fine Arts" <?= (isset($_GET['college']) && $_GET['college'] == "College of Architecture and Fine Arts") ? 'selected' : '' ?>>College of Architecture and Fine Arts</option>
+                <option value="College of Hospitality and Tourism Management" <?= (isset($_GET['college']) && $_GET['college'] == "College of Hospitality and Tourism Management") ? 'selected' : '' ?>>College of Hospitality and Tourism Management</option>
+                <option value="College of Education" <?= (isset($_GET['college']) && $_GET['college'] == "College of Education") ? 'selected' : '' ?>>College of Education</option>
+                <option value="College of Business and Public Administration" <?= (isset($_GET['college']) && $_GET['college'] == "College of Business and Public Administration") ? 'selected' : '' ?>>College of Business and Public Administration</option>
+            </select>
+            <input type="text" name="course" placeholder="Search by course" value="<?= isset($_GET['course']) ? htmlspecialchars($_GET['course']) : '' ?>">
             <button type="submit">Search</button>
         </form>
+
         <div class="results-list">
         <?php
-        if (isset($_GET['query'])) {
-            $q = "%{$_GET['query']}%";
-            $stmt = $conn->prepare("SELECT * FROM researches WHERE title LIKE ? AND status='approved'");
-            $stmt->bind_param("s", $q);
+        if (isset($_GET['query']) || isset($_GET['college']) || isset($_GET['course'])) {
+            $conditions = ["status='approved'"];
+            $params = [];
+            $types = "";
+
+            if (!empty($_GET['query'])) {
+                $conditions[] = "title LIKE ?";
+                $params[] = '%' . $_GET['query'] . '%';
+                $types .= "s";
+            }
+            if (!empty($_GET['college'])) {
+                $conditions[] = "college = ?";
+                $params[] = $_GET['college'];
+                $types .= "s";
+            }
+            if (!empty($_GET['course'])) {
+                $conditions[] = "course LIKE ?";
+                $params[] = '%' . $_GET['course'] . '%';
+                $types .= "s";
+            }
+
+            $sql = "SELECT * FROM researches WHERE " . implode(" AND ", $conditions);
+            $stmt = $conn->prepare($sql);
+
+            if ($types) {
+                $stmt->bind_param($types, ...$params);
+            }
+
             $stmt->execute();
             $res = $stmt->get_result();
             $found = false;
+
             while ($row = $res->fetch_assoc()) {
                 $found = true;
-                $safeTitle = htmlspecialchars($row['title']);
-                $safeFile = htmlspecialchars($row['filename']);
-                echo "<div class='result-box'><strong>{$safeTitle}</strong><br><a href='uploads/{$safeFile}' target='_blank'>Download</a></div>";
+                $title = htmlspecialchars($row['title']);
+                $file = htmlspecialchars($row['filename']);
+                $college = htmlspecialchars($row['college']);
+                $course = htmlspecialchars($row['course']);
+
+                echo "<div class='result-box'>";
+                echo "<strong>$title</strong><br>";
+                echo "College: $college<br>";
+                echo "Course: $course<br>";
+                echo "<a href='uploads/$file' target='_blank'>Download</a>";
+                echo "</div>";
             }
+
             if (!$found) {
                 echo "<div class='no-results'>No research found matching your search.</div>";
             }
@@ -236,7 +270,6 @@
     </div>
     <footer style="background:#2d6cdf; color:#fff; text-align:center; padding:1.2rem 0; margin-top:2rem; font-size:1rem;">
         &copy; 2025 Student Research Archive. All rights reserved.<br>
-        <br>
         <span style="font-size:0.95em; color:#e0e7ef;">
             Designed by the HexaTech Developers Team
         </span>
